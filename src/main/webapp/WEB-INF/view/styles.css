@@ -1,0 +1,39 @@
+body{
+    margin: 0;
+    background-color: #3A3E47;
+    color: #2D2D38;
+    font-family: arial;
+    min-width: 1200px;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+}
+
+#mainLayout{
+    background-color: #F9FFF1;
+    width: 80%;
+    min-height: 90%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#header{
+    background-color: #383838;
+}
+
+H1{
+    color: #F9FFF1;
+}
+
+
+#content{
+    border-right: 1px solid #383838;
+    box-shadow: 6px 0 4px -4px #686868;
+}
+
+#text {
+    font-size: 170%;
+}
+
+img{
+    width: 100%;
+}
