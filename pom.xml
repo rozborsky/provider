@@ -16,6 +16,7 @@
         <bootstrap>4.0.0-alpha.6</bootstrap>
         <jquery>3.0.0</jquery>
         <org.hibernate>5.4.0.Final</org.hibernate>
+        <spring.data>1.10.5.RELEASE</spring.data>
     </properties>
 
     <packaging>war</packaging>
@@ -108,7 +109,17 @@
             <version>${jquery}</version>
         </dependency>
 <!--DB-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.3.5.RELEASE</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1208.jre7</version>
+        </dependency>
 <!--validation-->
         <dependency>
             <groupId>org.hibernate</groupId>
