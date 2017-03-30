@@ -2,12 +2,16 @@ package ua.rozborsky.provider.classes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import ua.rozborsky.provider.interfaces.DAO;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by roman on 29.03.2017.
@@ -28,6 +32,71 @@ public class DAOspring implements DAO{
     @PostConstruct
     private void inint() {
         jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+
+    public List<User> getUsers() {
+        return jdbcTemplate.query(
+                "SELECT * FROM users",
+                new RowMapper<User>() {
+                    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        User user = new User();
+                        user.setId(rs.getInt("id"));
+                        user.setName(rs.getString("name"));
+                        user.setSecondName(rs.getString("second_name"));
+                        user.setAddress(rs.getString("address"));
+                        return user;
+                    }
+                });
+    }
+
+    public User getUser(int id){
+        User user = jdbcTemplate.queryForObject(
+                "SELECT * FROM users WHERE id = ?",
+                new Object[]{id},
+                new RowMapper<User>() {
+                    public  User mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        User user = new User();
+                        user.setId(rs.getInt("id"));
+                        user.setName(rs.getString("name"));
+                        user.setSecondName(rs.getString("second_name"));
+                        user.setAddress(rs.getString("address"));
+                        return user;
+                    }
+                } );
+        return user;
+    }
+
+    public Score getScore(int idUser){
+        Score score = jdbcTemplate.queryForObject(
+                "SELECT * FROM score WHERE id_user = ?",
+                new Object[]{idUser},
+                new RowMapper<Score>() {
+                    public  Score mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Score score = new Score();
+                        score.setId(rs.getInt("id"));
+                        score.setIdUser(rs.getInt("id_user"));
+                        score.setMoney(new BigDecimal(rs.getString("money")));
+                        return score;
+                    }
+                } );
+        return score;
+    }
+
+    public Rate getRate(int id){
+        Rate rate = jdbcTemplate.queryForObject(
+                "SELECT * FROM rate WHERE id = ?",
+                new Object[]{id},
+                new RowMapper<Rate>() {
+                    public  Rate mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Rate rate = new Rate();
+                        rate.setId(rs.getInt("id"));
+                        rate.setName(rs.getString("name"));
+                        rate.setCost(new BigDecimal(rs.getString("cost")));
+                        return rate;
+                    }
+                } );
+        return rate;
     }
 
     public void initDB() {
