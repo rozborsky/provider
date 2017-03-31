@@ -21,4 +21,5 @@ public interface DAO {
     Score getScore(int idUser);
     Rate getRate(int id);
     List<Rate> rateList();
+    void updateRate(int idRate, int id);
 }

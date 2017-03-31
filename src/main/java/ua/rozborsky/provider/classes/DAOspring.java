@@ -114,6 +114,11 @@ public class DAOspring implements DAO{
                 });
     }
 
+    public void updateRate(int idRate, int id) {
+        jdbcTemplate.update("UPDATE score SET id_rate=? WHERE id=?",
+                idRate, id);
+    }
+
     public void initDB() {
         dropTables();
         createTables();

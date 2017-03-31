@@ -67,7 +67,12 @@ public class MainController {
     }
 
     @RequestMapping(value = "/score/{id}", method = RequestMethod.POST)
-    public ModelAndView changeRate(@PathVariable(value="id") int id) {
+    public ModelAndView changeRate(@PathVariable(value="id") int id, @ModelAttribute("score") Score newScore) {
+        Score oldScore = dao.getScore(id);
+        if (oldScore.getIdRate() != newScore.getIdRate()) {
+            dao.updateRate(newScore.getIdRate(), id);
+        }
+
         User user = dao.getUser(id);
         Score score = dao.getScore(id);
         Rate rate = dao.getRate(score.getIdRate());
@@ -78,7 +83,7 @@ public class MainController {
         modelAndView.addObject("score", score);
         modelAndView.addObject("currentRate", rate);
         modelAndView.addObject("rateList", rateList);
-        System.out.println(rate.getName());
+
         return modelAndView;
     }
 
