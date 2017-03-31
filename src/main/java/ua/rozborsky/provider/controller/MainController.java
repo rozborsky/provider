@@ -12,6 +12,7 @@ import ua.rozborsky.provider.classes.Score;
 import ua.rozborsky.provider.classes.User;
 import ua.rozborsky.provider.interfaces.DAO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -40,7 +41,8 @@ public class MainController {
 
     @RequestMapping(value = {"/users"}, method = RequestMethod.POST)
     public ModelAndView saveUser(@ModelAttribute("user") User user) {
-        dao.addUser(user.getName(), user.getSecondName(), user.getAddress());
+        int idUser = dao.addUser(user.getName(), user.getSecondName(), user.getAddress());
+        dao.addScore(idUser, 1, new BigDecimal(0));
 
         List users = dao.getUsers();
         ModelAndView modelAndView = new ModelAndView("users");

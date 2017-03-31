@@ -2,15 +2,16 @@ package ua.rozborsky.provider.classes;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 import ua.rozborsky.provider.interfaces.DAO;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -144,11 +145,20 @@ public class DAOspring implements DAO{
     }
 
 
-    public void addUser(String name, String secondName, String address) {
-        jdbcTemplate.update(
-                "INSERT INTO users (name, second_name, address) VALUES (?, ?, ?)",
-                name, secondName, address
-        );
+    public int addUser(final String name, final String secondName, final String address) {
+        GeneratedKeyHolder holder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement statement = con.prepareStatement("INSERT INTO users (name, second_name, address) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, name);
+                statement.setString(2, secondName);
+                statement.setString(3, address);
+                return statement;
+            }
+        }, holder);
+
+        return (int)holder.getKeys().get("id");
     }
 
 

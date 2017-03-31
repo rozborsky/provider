@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface DAO {
     void initDB();
-    void addUser(String name, String secondName, String address);
+    int addUser(String name, String secondName, String address);
     void addScore(int id_user, int id_rate, BigDecimal money);
     void addRate(String name, BigDecimal score);
 
