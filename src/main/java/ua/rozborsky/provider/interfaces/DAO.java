@@ -13,11 +13,12 @@ import java.util.List;
 public interface DAO {
     void initDB();
     void addUser(String name, String secondName, String address);
-    void addScore(int id_user, BigDecimal money);
+    void addScore(int id_user, int id_rate, BigDecimal money);
     void addRate(String name, BigDecimal score);
 
     List<User> getUsers();
     User getUser(int id);
     Score getScore(int idUser);
     Rate getRate(int id);
+    List<Rate> rateList();
 }

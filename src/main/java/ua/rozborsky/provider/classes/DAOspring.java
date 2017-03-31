@@ -76,6 +76,7 @@ public class DAOspring implements DAO{
                         Score score = new Score();
                         score.setId(rs.getInt("id"));
                         score.setIdUser(rs.getInt("id_user"));
+                        score.setIdRate(rs.getInt("id_rate"));
                         score.setMoney(new BigDecimal(rs.getString("money")));
                         return score;
                     }
@@ -99,6 +100,20 @@ public class DAOspring implements DAO{
         return rate;
     }
 
+    public List<Rate> rateList() {
+        return jdbcTemplate.query(
+                "SELECT * FROM rate",
+                new RowMapper<Rate>() {
+                    public Rate mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Rate rate = new Rate();
+                        rate.setId(rs.getInt("id"));
+                        rate.setName(rs.getString("name"));
+                        rate.setCost(new BigDecimal(rs.getString("cost")));
+                        return rate;
+                    }
+                });
+    }
+
     public void initDB() {
         dropTables();
         createTables();
@@ -107,10 +122,10 @@ public class DAOspring implements DAO{
         addUser("Robert", "de Diro", "New York, Greenwich village");
         addUser("Al", "Pacino", "New York, East Harlem");
 
-        addScore(1, new BigDecimal(100.38));
-        addScore(2, new BigDecimal(3060));
-        addScore(3, new BigDecimal(0.523));
-        addScore(4, new BigDecimal(50.06));
+        addScore(1, 1, new BigDecimal(100.38));
+        addScore(2, 1, new BigDecimal(3060));
+        addScore(3, 2, new BigDecimal(0.523));
+        addScore(4, 1, new BigDecimal(50.06));
 
         addRate("Standart", new BigDecimal(10));
         addRate("VIP", new BigDecimal(100));
@@ -132,10 +147,10 @@ public class DAOspring implements DAO{
     }
 
 
-    public void addScore(int id_user, BigDecimal money) {
+    public void addScore(int id_user, int id_rate, BigDecimal money) {
         jdbcTemplate.update(
-                "INSERT INTO score (id_user, money) VALUES (?, ?)",
-                id_user, money
+                "INSERT INTO score (id_user, id_rate, money) VALUES (?, ?, ?)",
+                id_user, id_rate, money
         );
     }
 
@@ -161,6 +176,7 @@ public class DAOspring implements DAO{
                 "(\n" +
                 "id SERIAL PRIMARY KEY,\n" +
                 "id_user integer,\n" +
+                "id_rate integer,\n" +
                 "money NUMERIC(10, 5)\n" +
                 ")");
 

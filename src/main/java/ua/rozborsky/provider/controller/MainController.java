@@ -29,7 +29,7 @@ public class MainController {
 
     @RequestMapping(value = {"/", "/users"}, method = RequestMethod.GET)
     public ModelAndView users(@ModelAttribute("user") User user) {
-        //dao.initDB();                                                         creating tables and filling them data
+        //dao.initDB();                                                         //creating tables and filling them data
         List users = dao.getUsers();
         ModelAndView modelAndView = new ModelAndView("users");
         modelAndView.addObject("users", users);
@@ -54,14 +54,31 @@ public class MainController {
     public ModelAndView score(@PathVariable(value="id") int id) {
         User user = dao.getUser(id);
         Score score = dao.getScore(id);
-        Rate rate = dao.getRate(id);
+        Rate rate = dao.getRate(score.getIdRate());
+        List <Rate> rateList = dao.rateList();
 
-        System.out.println(score.getMoney());
         ModelAndView modelAndView = new ModelAndView("score");
         modelAndView.addObject("user", user);
         modelAndView.addObject("score", score);
-        modelAndView.addObject("rate", rate);
+        modelAndView.addObject("currentRate", rate);
+        modelAndView.addObject("rateList", rateList);
+        System.out.println(rate.getName());
+        return modelAndView;
+    }
 
+    @RequestMapping(value = "/score/{id}", method = RequestMethod.POST)
+    public ModelAndView changeRate(@PathVariable(value="id") int id) {
+        User user = dao.getUser(id);
+        Score score = dao.getScore(id);
+        Rate rate = dao.getRate(score.getIdRate());
+        List <Rate> rateList = dao.rateList();
+
+        ModelAndView modelAndView = new ModelAndView("score");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("score", score);
+        modelAndView.addObject("currentRate", rate);
+        modelAndView.addObject("rateList", rateList);
+        System.out.println(rate.getName());
         return modelAndView;
     }
 

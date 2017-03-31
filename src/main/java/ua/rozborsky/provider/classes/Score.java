@@ -9,6 +9,8 @@ public class Score {
     private int id;
     private int idUser;
     private BigDecimal money;
+    private int idRate;
+
 
     public int getId() {
         return id;
@@ -33,4 +35,13 @@ public class Score {
     public void setMoney(BigDecimal money) {
         this.money = money;
     }
+
+    public int getIdRate() {
+        return idRate;
+    }
+
+    public void setIdRate(int idRate) {
+        this.idRate = idRate;
+    }
+
 }
