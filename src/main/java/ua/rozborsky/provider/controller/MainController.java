@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ua.rozborsky.provider.classes.Rate;
-import ua.rozborsky.provider.classes.Score;
-import ua.rozborsky.provider.classes.User;
+import ua.rozborsky.provider.classes.*;
 import ua.rozborsky.provider.interfaces.DAO;
 
 import java.math.BigDecimal;
@@ -27,10 +25,12 @@ public class MainController {
     @Autowired
     User user;
 
+    @Autowired
+    InitDB initDB;
 
     @RequestMapping(value = {"/", "/users"}, method = RequestMethod.GET)
     public ModelAndView users(@ModelAttribute("user") User user) {
-              dao.initDB();                                                         //creating tables and filling them data
+        //initDB.initDB();                                                        //creating tables and filling them data
         List users = dao.getUsers();
         ModelAndView modelAndView = new ModelAndView("users");
         modelAndView.addObject("users", users);
@@ -90,8 +90,11 @@ public class MainController {
     }
 
     @RequestMapping(value = "/transactions", method = RequestMethod.GET)
-    public String transactions() {
+    public ModelAndView transactions() {
+        List<Transaction> transactions = dao.getTransactions();
+        ModelAndView modelAndView = new ModelAndView("transactions");
+        modelAndView.addObject("transactions", transactions);
 
-        return "transactions";
+        return modelAndView;
     }
 }

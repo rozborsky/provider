@@ -4,6 +4,26 @@
     	<div class="col-12" id="aboutMe">
 			<p id="text">
 				<p>transactions</p>
+				<table>
+				<tr>
+                    <c:forEach items="${transactions}" var="transaction">
+                        <tr>
+                            <td>
+                                ${transaction.getId()}
+                            </td>
+                            <td>
+                                ${transaction.getIdUser()}
+                            </td>
+                            <td>
+                                ${transaction.getTimestamp()}
+                            </td>
+                            <td>
+                                ${transaction.getChange()}
+                            </td>
+
+                        </tr>
+                    </c:forEach>
+                </table>
 			</p>
 		</div>
 	</div>
