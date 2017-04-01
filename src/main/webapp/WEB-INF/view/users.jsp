@@ -27,17 +27,27 @@
                             </td>
                         </tr>
                     </c:forEach>
+                    <tr>
+                    <form:form method="post" modelAttribute="user" action="users">
+                        <td></td>
+                        <td>
+                             <form:input path="name" type="text" />
+                             <form:errors path="name" />
+                        </td>
+                        <td>
+                            <form:input path="secondName" type="text" />
+                            <form:errors path="secondName" />
+                        </td>
+                        <td>
+                            <form:input path="address" type="text" />
+                            <form:errors path="address" />
+                        </td>
+                        <td>
+                            <input type="submit" value="add user"/>
+                        </td>
+                        </form:form>
+                    </tr>
                 </table>
-
-                <form:form method="post" modelAttribute="user" action="users">
-                    <form:input path="name" type="text" />
-                    <form:errors path="name" />
-                    <form:input path="secondName" type="text" />
-                    <form:errors path="secondName" />
-                    <form:input path="address" type="text" />
-                    <form:errors path="address" />
-                    <input type="submit" value="add user"/>
-                </form:form>
 			</p>
 		</div>
 	</div>

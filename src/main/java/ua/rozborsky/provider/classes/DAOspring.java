@@ -24,6 +24,9 @@ public class DAOspring implements DAO{
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    Time time;
+
     private JdbcTemplate jdbcTemplate;
 
     DAOspring() {
@@ -135,12 +138,111 @@ public class DAOspring implements DAO{
 
         addRate("Standart", new BigDecimal(10));
         addRate("VIP", new BigDecimal(100));
+
+        addTransaction(1, time.getTimestamp(2016, 1, 5, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(1, time.getTimestamp(2016, 1, 6, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 1, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 1, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(4, time.getTimestamp(2016, 1, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(4, time.getTimestamp(2016, 1, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(1, time.getTimestamp(2016, 2, 4, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(1, time.getTimestamp(2016, 2, 6, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 2, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 2, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(4, time.getTimestamp(2016, 2, 25, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(4, time.getTimestamp(2016, 2, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(1, time.getTimestamp(2016, 3, 5, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(1, time.getTimestamp(2016, 3, 6, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 2, 28, 12, 0, 0 ),
+                new BigDecimal(20));
+        addTransaction(2, time.getTimestamp(2016, 3, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(4, time.getTimestamp(2016, 3, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(4, time.getTimestamp(2016, 3, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(1, time.getTimestamp(2016, 4, 7, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(1, time.getTimestamp(2016, 4, 8, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 4, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 4, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(3, time.getTimestamp(2016, 4, 17, 12, 0, 0 ),
+                new BigDecimal(100));
+        addTransaction(3, time.getTimestamp(2016, 4, 18, 03, 0, 0 ),
+                new BigDecimal(-100));
+        addTransaction(4, time.getTimestamp(2016, 4, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(4, time.getTimestamp(2016, 4, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(1, time.getTimestamp(2016, 5, 4, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(1, time.getTimestamp(2016, 5, 6, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 5, 2, 12, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(4, time.getTimestamp(2016, 5, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(4, time.getTimestamp(2016, 5, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(1, time.getTimestamp(2016, 5, 5, 12, 0, 0 ),
+                new BigDecimal(100));
+        addTransaction(1, time.getTimestamp(2016, 5, 6, 3, 0, 0 ),
+                new BigDecimal(-100));
+        addTransaction(2, time.getTimestamp(2016, 5, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 5, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 6, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 6, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 7, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 7, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 8, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 8, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 9, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 9, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 10, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 10, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+        addTransaction(2, time.getTimestamp(2016, 11, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 11, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
+         addTransaction(2, time.getTimestamp(2016, 12, 1, 12, 0, 0 ),
+                new BigDecimal(10));
+        addTransaction(2, time.getTimestamp(2016, 12, 2, 3, 0, 0 ),
+                new BigDecimal(-10));
     }
 
 
     private void dropTables() {
         jdbcTemplate.execute(
-                "DROP TABLE IF EXISTS users, score, rate"
+                "DROP TABLE IF EXISTS users, score, rate, transactions"
         );
     }
 
@@ -177,6 +279,13 @@ public class DAOspring implements DAO{
         );
     }
 
+    public void addTransaction(int id_user, long timestamp, BigDecimal change) {
+        jdbcTemplate.update(
+                "INSERT INTO transactions (id_user, timestamp, change) VALUES (?, ?, ?)",
+                id_user, timestamp, change
+        );
+    }
+
 
     private void createTables() {
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS public.users\n" +
@@ -200,6 +309,14 @@ public class DAOspring implements DAO{
                 "id SERIAL PRIMARY KEY,\n" +
                 "name character varying(20),\n" +
                 "cost NUMERIC(10, 5)\n" +
+                ")");
+
+        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS public.transactions\n" +
+                "(\n" +
+                "id SERIAL PRIMARY KEY,\n" +
+                "id_user integer,\n" +
+                "timestamp bigint,\n" +
+                "change NUMERIC(10, 5)\n" +
                 ")");
     }
 }

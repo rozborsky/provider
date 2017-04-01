@@ -21,9 +21,6 @@
                         ${score.getMoney()}
                     </td>
                     <td>
-                        ${score.getIdRate()}
-                    </td>
-                    <td>
                         <form:form method="post" modelAttribute="score" action="${user.getId()}">
                             <form:select path="idRate">
                                 <option selected disabled>${currentRate.getName()}</option>

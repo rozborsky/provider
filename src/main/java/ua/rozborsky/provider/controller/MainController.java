@@ -30,7 +30,7 @@ public class MainController {
 
     @RequestMapping(value = {"/", "/users"}, method = RequestMethod.GET)
     public ModelAndView users(@ModelAttribute("user") User user) {
-        //dao.initDB();                                                         //creating tables and filling them data
+              dao.initDB();                                                         //creating tables and filling them data
         List users = dao.getUsers();
         ModelAndView modelAndView = new ModelAndView("users");
         modelAndView.addObject("users", users);
