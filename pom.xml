@@ -13,8 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>4.3.1.RELEASE</org.springframework.version>
         <org.hibernate>5.0.0.CR1</org.hibernate>
-        <bootstrap>4.0.0-alpha.6</bootstrap>
-        <jquery>3.0.0</jquery>
+        <bootstrap>3.3.7</bootstrap>
+        <jquery>3.1.1-1</jquery>
         <org.hibernate>5.4.0.Final</org.hibernate>
         <spring.data>1.10.5.RELEASE</spring.data>
     </properties>
