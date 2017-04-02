@@ -115,12 +115,25 @@ public class MainController {
 
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
     public ModelAndView filteredTransactions(@ModelAttribute("filter") Filter filter) {
-
         List<Integer> startDate = dateParser.parse(filter.getStartDate());
         List<Integer> finishDate = dateParser.parse(filter.getFinishDate());
+
+        long startTimestamp;
+        if (startDate.isEmpty()){
+            startTimestamp = 0;
+        } else {
+            startTimestamp = time.getTimestamp(startDate.get(0), startDate.get(1), startDate.get(2), 0, 0, 0);
+        }
+
+        long stopTimestamp;
+        if (finishDate.isEmpty()){
+            stopTimestamp = time.getCurrentTimestamp();
+        } else {
+            stopTimestamp = time.getTimestamp(finishDate.get(0), finishDate.get(1), finishDate.get(2), 0, 0, 0);
+        }
+
         List<Transaction> transactions = dao.getFilteredTransactions(filter.getName(), filter.getSurname(),
-                time.getTimestamp(startDate.get(0), startDate.get(1), startDate.get(2), 0, 0, 0),
-                time.getTimestamp(finishDate.get(0), finishDate.get(1), finishDate.get(2), 0, 0, 0));
+            startTimestamp, stopTimestamp);
 
         ModelAndView modelAndView = new ModelAndView("transactions");
         modelAndView.addObject("transactions", transactions);
@@ -130,4 +143,6 @@ public class MainController {
 
         return modelAndView;
     }
+
+
 }

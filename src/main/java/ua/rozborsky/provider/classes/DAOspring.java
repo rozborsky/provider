@@ -134,10 +134,20 @@ public class DAOspring implements DAO{
     }
 
     public List<Transaction> getFilteredTransactions(String name, String surname, long startDate, long finishDate) {
-        return jdbcTemplate.query(
-                "SELECT * FROM transactions A LEFT JOIN users B ON A.id_user=B.id WHERE A.timestamp BETWEEN "
-                        + startDate + " AND " + finishDate + "ORDER BY A.timestamp",
-                new RowMapper<Transaction>() {
+        String filterByName = "";
+        if (!name.equals("")){
+            filterByName = "B.name LIKE '" + name + "%' AND ";
+        }
+        String filterBySurname = "";
+        if (!surname.equals("")){
+            filterBySurname = "B.second_name LIKE '" + surname + "%' AND ";
+        }
+
+        String sql = "SELECT * FROM transactions A LEFT JOIN users B ON A.id_user=B.id WHERE "
+                + filterByName
+                + filterBySurname
+                + "A.timestamp BETWEEN " + startDate + " AND " + finishDate + " ORDER BY A.timestamp";
+        return jdbcTemplate.query( sql,new RowMapper<Transaction>() {
                     public Transaction mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Transaction transaction = new Transaction();
                         transaction.setId(rs.getInt("id"));

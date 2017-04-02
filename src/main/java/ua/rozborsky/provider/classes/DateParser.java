@@ -3,6 +3,7 @@ package ua.rozborsky.provider.classes;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,12 +12,17 @@ import java.util.List;
 @Component
 public class DateParser {
     public List<Integer> parse(String date) {
-        String [] dateParts = date.split("-");
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list;
+        try{
+            list = new ArrayList<>();
+            String [] dateParts = date.split("-");
 
-        list.add(Integer.valueOf(dateParts[0]));
-        list.add(Integer.valueOf(dateParts[1]));
-        list.add(Integer.valueOf(dateParts[2]));
+            list.add(Integer.valueOf(dateParts[0]));
+            list.add(Integer.valueOf(dateParts[1]));
+            list.add(Integer.valueOf(dateParts[2]));
+        } catch(ArrayIndexOutOfBoundsException | NumberFormatException e){
+            list = Collections.emptyList();
+        }
 
         return list;
     }

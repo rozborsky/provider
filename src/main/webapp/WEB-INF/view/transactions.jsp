@@ -11,10 +11,10 @@
                             <td>
                             </td>
                             <td>
-                               <form:input path="name" type="text" />
+                               <form:input path="surname" type="text" />
                             </td>
                             <td>
-                                 <form:input path="surname" type="text" />
+                                 <form:input path="name" type="text" />
                             </td>
                             <td>
                             </td>
