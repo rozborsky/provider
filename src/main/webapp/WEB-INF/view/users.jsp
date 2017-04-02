@@ -3,31 +3,30 @@
 	<jsp:include page="header.jsp" />
 	<div class="row">
     	<div class="col-12" id="aboutMe">
-			<p id="text">
-				<p>users</p>
-                <table>
-                    <c:forEach items="${users}" var="user">
-                        <tr>
-                            <td>
-                                ${user.getId()}
-                            </td>
-                            <td>
-                                ${user.getName()}
-                            </td>
-                            <td>
-                                ${user.getSecondName()}
-                            </td>
-                            <td>
-                                ${user.getAddress()}
-                            </td>
-                            <td>
-                                <a href="score/${user.getId()}">
-                                    <button>csore</button>
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
+            <p>users</p>
+            <table>
+                <c:forEach items="${users}" var="user">
                     <tr>
+                        <td>
+                            ${user.getId()}
+                        </td>
+                        <td>
+                            ${user.getName()}
+                        </td>
+                        <td>
+                            ${user.getSecondName()}
+                        </td>
+                        <td>
+                            ${user.getAddress()}
+                        </td>
+                        <td>
+                            <a href="score/${user.getId()}">
+                                <button>score</button>
+                            </a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                <tr>
                     <form:form method="post" modelAttribute="user" action="users">
                         <td></td>
                         <td>
@@ -45,10 +44,9 @@
                         <td>
                             <input type="submit" value="add user"/>
                         </td>
-                        </form:form>
-                    </tr>
-                </table>
-			</p>
+                    </form:form>
+                </tr>
+            </table>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp" />

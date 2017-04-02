@@ -28,6 +28,18 @@ public class MainController {
     @Autowired
     InitDB initDB;
 
+    @Autowired
+    Transaction transaction;
+
+    @Autowired
+    Filter filter;
+
+    @Autowired
+    Time time;
+
+    @Autowired
+    DateParser dateParser;
+
     @RequestMapping(value = {"/", "/users"}, method = RequestMethod.GET)
     public ModelAndView users(@ModelAttribute("user") User user) {
         //initDB.initDB();                                                        //creating tables and filling them data
@@ -90,10 +102,31 @@ public class MainController {
     }
 
     @RequestMapping(value = "/transactions", method = RequestMethod.GET)
-    public ModelAndView transactions() {
+    public ModelAndView allTransactions() {
         List<Transaction> transactions = dao.getTransactions();
         ModelAndView modelAndView = new ModelAndView("transactions");
         modelAndView.addObject("transactions", transactions);
+        modelAndView.addObject("filter", filter);
+        List users = dao.getUsers();
+        modelAndView.addObject("users", users);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
+    public ModelAndView filteredTransactions(@ModelAttribute("filter") Filter filter) {
+
+        List<Integer> startDate = dateParser.parse(filter.getStartDate());
+        List<Integer> finishDate = dateParser.parse(filter.getFinishDate());
+        List<Transaction> transactions = dao.getFilteredTransactions(filter.getName(), filter.getSurname(),
+                time.getTimestamp(startDate.get(0), startDate.get(1), startDate.get(2), 0, 0, 0),
+                time.getTimestamp(finishDate.get(0), finishDate.get(1), finishDate.get(2), 0, 0, 0));
+
+        ModelAndView modelAndView = new ModelAndView("transactions");
+        modelAndView.addObject("transactions", transactions);
+        modelAndView.addObject("filter", filter);
+        List users = dao.getUsers();
+        modelAndView.addObject("users", users);
 
         return modelAndView;
     }

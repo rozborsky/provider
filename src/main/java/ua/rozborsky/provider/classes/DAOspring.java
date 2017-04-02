@@ -118,13 +118,33 @@ public class DAOspring implements DAO{
 
     public List<Transaction> getTransactions() {
         return jdbcTemplate.query(
-                "SELECT * FROM transactions",
+                "SELECT * FROM transactions A LEFT JOIN users B ON A.id_user=B.id",
                 new RowMapper<Transaction>() {
                     public Transaction mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Transaction transaction = new Transaction();
                         transaction.setId(rs.getInt("id"));
                         transaction.setIdUser(rs.getInt("id_user"));
-                        transaction.setTimestamp(rs.getLong("timestamp"));
+                        transaction.setDate(rs.getLong("timestamp"));
+                        transaction.setName(rs.getString("name"));
+                        transaction.setSurname(rs.getString("second_name"));
+                        transaction.setChange(new BigDecimal(rs.getString("change")));
+                        return transaction;
+                    }
+                });
+    }
+
+    public List<Transaction> getFilteredTransactions(String name, String surname, long startDate, long finishDate) {
+        return jdbcTemplate.query(
+                "SELECT * FROM transactions A LEFT JOIN users B ON A.id_user=B.id WHERE A.timestamp BETWEEN "
+                        + startDate + " AND " + finishDate + "ORDER BY A.timestamp",
+                new RowMapper<Transaction>() {
+                    public Transaction mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Transaction transaction = new Transaction();
+                        transaction.setId(rs.getInt("id"));
+                        transaction.setIdUser(rs.getInt("id_user"));
+                        transaction.setDate(rs.getLong("timestamp"));
+                        transaction.setName(rs.getString("name"));
+                        transaction.setSurname(rs.getString("second_name"));
                         transaction.setChange(new BigDecimal(rs.getString("change")));
                         return transaction;
                     }

@@ -5,11 +5,12 @@
     	<div class="col-12" id="aboutMe">
             <p>score</p>
             <table id="scoreTable">
-                <th>name</th>
-                <th>second name</th>
-                <th>money on account</th>
-                <th>rate</th>
-
+                <tr>
+                    <th>name</th>
+                    <th>second name</th>
+                    <th>money on account</th>
+                    <th>rate</th>
+                </tr>
                 <tr>
                     <td>
                         ${user.getSecondName()}
@@ -35,7 +36,7 @@
                             <input type="submit" value="change rate"/>
                         </form:form>
                     </td>
-                 </tr>
+                </tr>
             </table>
 		</div>
 	</div>

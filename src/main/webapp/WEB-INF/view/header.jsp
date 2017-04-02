@@ -8,9 +8,24 @@
 
  		<meta charset="utf-8">
      	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link href="webjars/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+        <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
         <link rel="shortcut icon" href='<c:url value="/resources/images/favicon.png" />' type="image/x-icon">
+        <script src="webjars/jquery/3.1.1-1/jquery.min.js"></script>
+
+        <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+        <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+
+        <script type='text/javascript'>
+            $(function(){
+                $('.input-daterange').datepicker({
+                    autoclose: true,
+                    format: "yyyy-mm-dd"
+                });
+            });
+        </script>
+
         <style>
 			<%@include file='styles.css'%>
         </style>
