@@ -33,10 +33,10 @@ public class InitDB {
     public void initDB() {
         dropTables();
         createTables();
-        dao.addUser("Clint", "Eastwood", "Los Angeles");
-        dao.addUser("Philip Seymour", "Hoffman", "New York, Manhattan");
-        dao.addUser("Robert", "de Diro", "New York, Greenwich village");
-        dao.addUser("Al", "Pacino", "New York, East Harlem");
+        dao.addUser("Clint", "Eastwood", "Los Angeles", 1451952000000L);
+        dao.addUser("Philip Seymour", "Hoffman", "New York, Manhattan", 1451520000000L);
+        dao.addUser("Robert", "de Diro", "New York, Greenwich village", 1460764800000L);
+        dao.addUser("Al", "Pacino", "New York, East Harlem", 1451520000000L);
 
         dao.addScore(1, 1, new BigDecimal(100.38));
         dao.addScore(2, 1, new BigDecimal(3060));
@@ -159,7 +159,8 @@ public class InitDB {
                 "id SERIAL PRIMARY KEY,\n" +
                 "name character varying(20),\n" +
                 "second_name character varying(30),\n" +
-                "address character varying(100)\n" +
+                "address character varying(100),\n" +
+                "registrationDate bigint\n" +
                 ")");
 
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS public.score\n" +

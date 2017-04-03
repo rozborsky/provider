@@ -46,6 +46,7 @@ public class DAOspring implements DAO{
                         user.setName(rs.getString("name"));
                         user.setSecondName(rs.getString("second_name"));
                         user.setAddress(rs.getString("address"));
+                        user.setRegistrationDate(rs.getLong("registrationDate"));
                         return user;
                     }
                 });
@@ -62,11 +63,13 @@ public class DAOspring implements DAO{
                         user.setName(rs.getString("name"));
                         user.setSecondName(rs.getString("second_name"));
                         user.setAddress(rs.getString("address"));
+                        user.setRegistrationDate(rs.getLong("registrationDate"));
                         return user;
                     }
                 } );
         return user;
     }
+
 
     public Score getScore(int idUser){
         Score score = jdbcTemplate.queryForObject(
@@ -171,15 +174,18 @@ public class DAOspring implements DAO{
     }
 
 
-    public int addUser(final String name, final String secondName, final String address) {
+    public int addUser(final String name, final String secondName, final String address, final long registrationDate) {
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                PreparedStatement statement = con.prepareStatement("INSERT INTO users (name, second_name, address) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement statement = con.prepareStatement(
+                        "INSERT INTO users (name, second_name, address, registrationDate) VALUES (?, ?, ?, ?)",
+                        Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, name);
                 statement.setString(2, secondName);
                 statement.setString(3, address);
+                statement.setLong(4, registrationDate);
                 return statement;
             }
         }, holder);

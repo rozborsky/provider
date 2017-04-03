@@ -12,7 +12,7 @@ import java.util.List;
  * Created by roman on 29.03.2017.
  */
 public interface DAO {
-    int addUser(String name, String secondName, String address);
+    int addUser(String name, String secondName, String address, long registrationDate);
     void addScore(int id_user, int id_rate, BigDecimal money);
     void addRate(String name, BigDecimal score);
     void addTransaction(int id_user, long timestamp, BigDecimal change);

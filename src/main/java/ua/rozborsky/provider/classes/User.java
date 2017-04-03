@@ -11,6 +11,7 @@ public class User {
     private String name;
     private String secondName;
     private String address;
+    private long registrationDate;
 
     public int getId() {
         return id;
@@ -42,5 +43,13 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public long getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(long registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }

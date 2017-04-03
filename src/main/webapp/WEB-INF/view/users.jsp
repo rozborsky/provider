@@ -20,6 +20,9 @@
                             ${user.getAddress()}
                         </td>
                         <td>
+                            ${user.getRegistrationDate()}
+                        </td>
+                        <td>
                             <a href="score/${user.getId()}">
                                 <button>score</button>
                             </a>

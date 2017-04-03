@@ -37,7 +37,7 @@
 		    </div>
 		    <div class="col-12" id="header">
 		        <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../">users</a></li>
+                    <li><a href="users">users</a></li>
                     <li><a href="transactions">transactions</a></li>
                 </ul>
 		    </div>
