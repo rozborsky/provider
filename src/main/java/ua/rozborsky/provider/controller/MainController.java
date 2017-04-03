@@ -59,7 +59,7 @@ public class MainController {
 
     @RequestMapping(value = {"/users"}, method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
-        int idUser = dao.addUser(user.getName(), user.getSecondName(), user.getAddress(), time.getCurrentTimestamp());
+        int idUser = dao.addUser(user.getName(), user.getSecondName(), user.getAddress(), time.getCurrentTimestamp(), user.geteMail());
         dao.addScore(idUser, 1, new BigDecimal(0));
         user.setName(null);
         user.setSecondName(null);
