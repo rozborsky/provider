@@ -24,6 +24,9 @@ public class DAOspring implements DAO{
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    Time time;
+
     private JdbcTemplate jdbcTemplate;
 
     DAOspring() {
@@ -33,6 +36,35 @@ public class DAOspring implements DAO{
     @PostConstruct
     private void init() {
         jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+
+    public void takeFee(int idUser, BigDecimal money) {
+        jdbcTemplate.update("UPDATE score SET money=? WHERE id_user=?",
+                money, idUser);
+    }
+
+
+    public List<Score> getScores() {
+        return jdbcTemplate.query(
+                "SELECT * FROM score",
+                new RowMapper<Score>() {
+                    public Score mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Score score = new Score();
+                        score.setId(rs.getInt("id"));
+                        score.setIdUser(rs.getInt("id_user"));
+                        score.setIdRate(rs.getInt("id_rate"));
+                        score.setMoney(new BigDecimal(rs.getString("money")));
+                        return score;
+                    }
+                });
+    }
+
+
+    public long getDateLastPayment(int idUser) {
+        return jdbcTemplate.queryForObject(
+                "SELECT MAX(timestamp) FROM transactions WHERE id_user=?",
+                Long.class, idUser);
     }
 
 
@@ -46,7 +78,8 @@ public class DAOspring implements DAO{
                         user.setName(rs.getString("name"));
                         user.setSecondName(rs.getString("second_name"));
                         user.setAddress(rs.getString("address"));
-                        user.setRegistrationDate(rs.getLong("registrationDate"));
+                        user.setRegistrationDate(time.getDateFromTimestamp(rs.getLong("registrationDate")));
+                        user.seteMail(rs.getString("email"));
                         return user;
                     }
                 });
@@ -63,7 +96,8 @@ public class DAOspring implements DAO{
                         user.setName(rs.getString("name"));
                         user.setSecondName(rs.getString("second_name"));
                         user.setAddress(rs.getString("address"));
-                        user.setRegistrationDate(rs.getLong("registrationDate"));
+                        user.setRegistrationDate(time.getDateFromTimestamp(rs.getLong("registrationDate")));
+                        user.seteMail(rs.getString("email"));
                         return user;
                     }
                 } );
@@ -127,7 +161,7 @@ public class DAOspring implements DAO{
                         Transaction transaction = new Transaction();
                         transaction.setId(rs.getInt("id"));
                         transaction.setIdUser(rs.getInt("id_user"));
-                        transaction.setDate(rs.getLong("timestamp"));
+                        transaction.setDate(time.getDateFromTimestamp(rs.getLong("timestamp")));
                         transaction.setName(rs.getString("name"));
                         transaction.setSurname(rs.getString("second_name"));
                         transaction.setChange(new BigDecimal(rs.getString("change")));
@@ -159,7 +193,7 @@ public class DAOspring implements DAO{
                         Transaction transaction = new Transaction();
                         transaction.setId(rs.getInt("id"));
                         transaction.setIdUser(rs.getInt("id_user"));
-                        transaction.setDate(rs.getLong("timestamp"));
+                        transaction.setDate(time.getDateFromTimestamp(rs.getLong("timestamp")));
                         transaction.setName(rs.getString("name"));
                         transaction.setSurname(rs.getString("second_name"));
                         transaction.setChange(new BigDecimal(rs.getString("change")));
@@ -174,18 +208,19 @@ public class DAOspring implements DAO{
     }
 
 
-    public int addUser(final String name, final String secondName, final String address, final long registrationDate) {
+    public int addUser(final String name, final String secondName, final String address, final long registrationDate, final String eMail) {
         GeneratedKeyHolder holder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement statement = con.prepareStatement(
-                        "INSERT INTO users (name, second_name, address, registrationDate) VALUES (?, ?, ?, ?)",
+                        "INSERT INTO users (name, second_name, address, registrationDate) VALUES (?, ?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, name);
                 statement.setString(2, secondName);
                 statement.setString(3, address);
                 statement.setLong(4, registrationDate);
+                statement.setString(4, eMail);
                 return statement;
             }
         }, holder);

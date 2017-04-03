@@ -11,7 +11,9 @@ public class User {
     private String name;
     private String secondName;
     private String address;
-    private long registrationDate;
+    private String registrationDate;
+
+    private String eMail;
 
     public int getId() {
         return id;
@@ -45,11 +47,19 @@ public class User {
         this.address = address;
     }
 
-    public long getRegistrationDate() {
+    public String getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(long registrationDate) {
+    public void setRegistrationDate(String registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public String geteMail() {
+        return eMail;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
     }
 }

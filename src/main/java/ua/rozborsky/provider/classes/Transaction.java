@@ -3,9 +3,6 @@ package ua.rozborsky.provider.classes;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by roman on 01.04.2017.
@@ -39,10 +36,8 @@ public class Transaction {
         return date;
     }
 
-    public void setDate(long timeStamp) {
-        Date time = new java.util.Date(timeStamp);
-        DateFormat formatter = new SimpleDateFormat("y-MM-dd HH:mm:ss");
-        date = formatter.format(time).replaceAll("\\s", " _ ");
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getName() {

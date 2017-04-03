@@ -33,15 +33,15 @@ public class InitDB {
     public void initDB() {
         dropTables();
         createTables();
-        dao.addUser("Clint", "Eastwood", "Los Angeles", 1451952000000L);
-        dao.addUser("Philip Seymour", "Hoffman", "New York, Manhattan", 1451520000000L);
-        dao.addUser("Robert", "de Diro", "New York, Greenwich village", 1460764800000L);
-        dao.addUser("Al", "Pacino", "New York, East Harlem", 1451520000000L);
+        dao.addUser("Clint", "Eastwood", "Los Angeles", 1451952000000L, "clint@gmail.com");
+        dao.addUser("Philip Seymour", "Hoffman", "New York, Manhattan", 1451520000000L, "hoffman@gmail.com");
+        dao.addUser("Robert", "de Diro", "New York, Greenwich village", 1460764800000L, "deniro@gmail.com");
+        dao.addUser("Al", "Pacino", "New York, East Harlem", 1451520000000L, "pacino@gmail.com");
 
-        dao.addScore(1, 1, new BigDecimal(100.38));
-        dao.addScore(2, 1, new BigDecimal(3060));
-        dao.addScore(3, 2, new BigDecimal(0.523));
-        dao.addScore(4, 1, new BigDecimal(50.06));
+        dao.addScore(1, 1, new BigDecimal(300));
+        dao.addScore(2, 1, new BigDecimal(50));
+        dao.addScore(3, 2, new BigDecimal(0.0));
+        dao.addScore(4, 1, new BigDecimal(10));
 
         dao.addRate("Standart", new BigDecimal(10));
         dao.addRate("VIP", new BigDecimal(100));
@@ -90,8 +90,8 @@ public class InitDB {
                 new BigDecimal(10));
         dao.addTransaction(2, time.getTimestamp(2016, 4, 2, 3, 0, 0 ),
                 new BigDecimal(-10));
-        dao.addTransaction(3, time.getTimestamp(2016, 4, 17, 12, 0, 0 ),
-                new BigDecimal(100));
+        dao.addTransaction(3, time.getTimestamp(2015, 4, 17, 12, 0, 0 ),
+                new BigDecimal(200));
         dao.addTransaction(3, time.getTimestamp(2016, 4, 18, 03, 0, 0 ),
                 new BigDecimal(-100));
         dao.addTransaction(4, time.getTimestamp(2016, 4, 1, 12, 0, 0 ),
@@ -160,7 +160,8 @@ public class InitDB {
                 "name character varying(20),\n" +
                 "second_name character varying(30),\n" +
                 "address character varying(100),\n" +
-                "registrationDate bigint\n" +
+                "registrationDate bigint,\n" +
+                "email character varying(100)\n" +
                 ")");
 
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS public.score\n" +

@@ -40,9 +40,14 @@ public class MainController {
     @Autowired
     DateParser dateParser;
 
+    @Autowired
+    ScoreManager scoreManager;
+
     @RequestMapping(value = {"/", "/users"}, method = RequestMethod.GET)
     public ModelAndView users(@ModelAttribute("user") User user) {
         //initDB.initDB();                                                        //creating tables and filling them data
+        scoreManager.checkUsers();
+
         List users = dao.getUsers();
         ModelAndView modelAndView = new ModelAndView("users");
         modelAndView.addObject("users", users);
@@ -77,6 +82,7 @@ public class MainController {
         modelAndView.addObject("currentRate", rate);
         modelAndView.addObject("rateList", rateList);
 
+        System.out.println(dao.getDateLastPayment(id));
         return modelAndView;
     }
 
