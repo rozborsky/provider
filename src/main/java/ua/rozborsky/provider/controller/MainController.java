@@ -93,10 +93,10 @@ public class MainController {
 
 
     @RequestMapping(value = "/transactions", method = RequestMethod.GET)
-    public ModelAndView allTransactions() {
+    public ModelAndView allTransactions(@ModelAttribute("filter") Filter filter) {
         List<Transaction> transactions = dao.getTransactions();
 
-        return scoreModelAmdView(transactions);
+        return scoreModelAmdView(transactions, filter);
     }
 
 
@@ -108,11 +108,11 @@ public class MainController {
         List<Transaction> transactions = dao.getTransactions(filter.getName(), filter.getSurname(),
             startTimestamp, stopTimestamp);
 
-        return scoreModelAmdView(transactions);
+        return scoreModelAmdView(transactions, filter);
     }
 
 
-    private ModelAndView scoreModelAmdView(List<Transaction> transactions) {
+    private ModelAndView scoreModelAmdView(List<Transaction> transactions, Filter filter) {
         ModelAndView modelAndView = new ModelAndView("transactions");
         modelAndView.addObject("transactions", transactions);
         modelAndView.addObject("filter", filter);
@@ -124,7 +124,7 @@ public class MainController {
 
 
     private long getStartTimestamp(String date) {
-        List<Integer> startDate = dateParser.parse(filter.getStartDate());
+        List<Integer> startDate = dateParser.parse(date);
 
         if (startDate.isEmpty()){
             return  0;
@@ -135,7 +135,7 @@ public class MainController {
 
 
     private long getFinishTimestamp(String date) {
-        List<Integer> finishDate = dateParser.parse(filter.getFinishDate());
+        List<Integer> finishDate = dateParser.parse(date);
 
         if (finishDate.isEmpty()){
             return time.getCurrentTimestamp();
