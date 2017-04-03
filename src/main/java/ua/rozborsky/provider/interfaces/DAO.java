@@ -24,5 +24,5 @@ public interface DAO {
     List<Rate> rateList();
     void updateRate(int idRate, int id);
     List<Transaction> getTransactions();
-    List<Transaction> getFilteredTransactions(String name, String surname, long startDate, long finishDate);
+    List<Transaction> getTransactions(String name, String surname, long startDate, long finishDate);
 }

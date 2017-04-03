@@ -51,18 +51,18 @@ public class MainController {
         return modelAndView;
     }
 
+
     @RequestMapping(value = {"/users"}, method = RequestMethod.POST)
-    public ModelAndView saveUser(@ModelAttribute("user") User user) {
+    public String saveUser(@ModelAttribute("user") User user) {
         int idUser = dao.addUser(user.getName(), user.getSecondName(), user.getAddress());
         dao.addScore(idUser, 1, new BigDecimal(0));
+        user.setName(null);
+        user.setSecondName(null);
+        user.setAddress(null);
 
-        List users = dao.getUsers();
-        ModelAndView modelAndView = new ModelAndView("users");
-        modelAndView.addObject("users", users);
-        modelAndView.addObject("user", user);
-
-        return modelAndView;
+        return "redirect:/users";
     }
+
 
     @RequestMapping(value = "/score/{id}", method = RequestMethod.GET)
     public ModelAndView score(@PathVariable(value="id") int id) {
@@ -76,65 +76,43 @@ public class MainController {
         modelAndView.addObject("score", score);
         modelAndView.addObject("currentRate", rate);
         modelAndView.addObject("rateList", rateList);
-        System.out.println(rate.getName());
+
         return modelAndView;
     }
 
+
     @RequestMapping(value = "/score/{id}", method = RequestMethod.POST)
-    public ModelAndView changeRate(@PathVariable(value="id") int id, @ModelAttribute("score") Score newScore) {
+    public String changeRate(@PathVariable(value="id") int id, @ModelAttribute("score") Score newScore) {
         Score oldScore = dao.getScore(id);
         if (oldScore.getIdRate() != newScore.getIdRate()) {
             dao.updateRate(newScore.getIdRate(), id);
         }
 
-        User user = dao.getUser(id);
-        Score score = dao.getScore(id);
-        Rate rate = dao.getRate(score.getIdRate());
-        List <Rate> rateList = dao.rateList();
-
-        ModelAndView modelAndView = new ModelAndView("score");
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("score", score);
-        modelAndView.addObject("currentRate", rate);
-        modelAndView.addObject("rateList", rateList);
-
-        return modelAndView;
+        return "redirect:/score/" + id;
     }
+
 
     @RequestMapping(value = "/transactions", method = RequestMethod.GET)
     public ModelAndView allTransactions() {
         List<Transaction> transactions = dao.getTransactions();
-        ModelAndView modelAndView = new ModelAndView("transactions");
-        modelAndView.addObject("transactions", transactions);
-        modelAndView.addObject("filter", filter);
-        List users = dao.getUsers();
-        modelAndView.addObject("users", users);
 
-        return modelAndView;
+        return scoreModelAmdView(transactions);
     }
+
 
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
     public ModelAndView filteredTransactions(@ModelAttribute("filter") Filter filter) {
-        List<Integer> startDate = dateParser.parse(filter.getStartDate());
-        List<Integer> finishDate = dateParser.parse(filter.getFinishDate());
+        long startTimestamp = getStartTimestamp(filter.getStartDate());
+        long stopTimestamp = getFinishTimestamp(filter.getFinishDate());
 
-        long startTimestamp;
-        if (startDate.isEmpty()){
-            startTimestamp = 0;
-        } else {
-            startTimestamp = time.getTimestamp(startDate.get(0), startDate.get(1), startDate.get(2), 0, 0, 0);
-        }
-
-        long stopTimestamp;
-        if (finishDate.isEmpty()){
-            stopTimestamp = time.getCurrentTimestamp();
-        } else {
-            stopTimestamp = time.getTimestamp(finishDate.get(0), finishDate.get(1), finishDate.get(2), 0, 0, 0);
-        }
-
-        List<Transaction> transactions = dao.getFilteredTransactions(filter.getName(), filter.getSurname(),
+        List<Transaction> transactions = dao.getTransactions(filter.getName(), filter.getSurname(),
             startTimestamp, stopTimestamp);
 
+        return scoreModelAmdView(transactions);
+    }
+
+
+    private ModelAndView scoreModelAmdView(List<Transaction> transactions) {
         ModelAndView modelAndView = new ModelAndView("transactions");
         modelAndView.addObject("transactions", transactions);
         modelAndView.addObject("filter", filter);
@@ -145,4 +123,24 @@ public class MainController {
     }
 
 
+    private long getStartTimestamp(String date) {
+        List<Integer> startDate = dateParser.parse(filter.getStartDate());
+
+        if (startDate.isEmpty()){
+            return  0;
+        } else {
+            return time.getTimestamp(startDate.get(0), startDate.get(1), startDate.get(2), 0, 0, 0);
+        }
+    }
+
+
+    private long getFinishTimestamp(String date) {
+        List<Integer> finishDate = dateParser.parse(filter.getFinishDate());
+
+        if (finishDate.isEmpty()){
+            return time.getCurrentTimestamp();
+        } else {
+            return time.getTimestamp(finishDate.get(0), finishDate.get(1), finishDate.get(2), 0, 0, 0);
+        }
+    }
 }

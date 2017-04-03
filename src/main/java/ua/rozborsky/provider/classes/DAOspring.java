@@ -133,7 +133,11 @@ public class DAOspring implements DAO{
                 });
     }
 
-    public List<Transaction> getFilteredTransactions(String name, String surname, long startDate, long finishDate) {
+    public List<Transaction> getTransactions(String name, String surname, long startDate, long finishDate){
+        return getFilteredTransactions(name, surname, startDate, finishDate);
+    }
+
+    private List<Transaction> getFilteredTransactions(String name, String surname, long startDate, long finishDate) {
         String filterByName = "";
         if (!name.equals("")){
             filterByName = "B.name LIKE '" + name + "%' AND ";
