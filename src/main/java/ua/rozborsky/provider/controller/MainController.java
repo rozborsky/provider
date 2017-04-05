@@ -82,7 +82,6 @@ public class MainController {
         modelAndView.addObject("currentRate", rate);
         modelAndView.addObject("rateList", rateList);
 
-        System.out.println(dao.getDateLastPayment(id));
         return modelAndView;
     }
 

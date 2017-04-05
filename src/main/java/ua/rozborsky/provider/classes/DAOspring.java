@@ -214,13 +214,13 @@ public class DAOspring implements DAO{
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement statement = con.prepareStatement(
-                        "INSERT INTO users (name, second_name, address, registrationDate) VALUES (?, ?, ?, ?, ?)",
+                        "INSERT INTO users (name, second_name, address, registrationDate, email) VALUES (?, ?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, name);
                 statement.setString(2, secondName);
                 statement.setString(3, address);
                 statement.setLong(4, registrationDate);
-                statement.setString(4, eMail);
+                statement.setString(5, eMail);
                 return statement;
             }
         }, holder);
